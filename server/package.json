@@ -1,0 +1,27 @@
+{
+  "name": "code-space",
+  "version": "1.0.0",
+  "description": "A simple live code/text share app.",
+  "main": "server.js",
+  "scripts": {
+    "start": "clear && nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrityunjay38/Code-Space.git"
+  },
+  "author": "Mrityunjay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrityunjay38/Code-Space/issues"
+  },
+  "homepage": "https://github.com/mrityunjay38/Code-Space#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "socket.io": "^4.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

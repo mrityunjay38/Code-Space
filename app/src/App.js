@@ -1,22 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import Editor from "@monaco-editor/react";
 import { debounce } from "./utils";
 
 const App = (props) => {
   const socket = io("ws://localhost:3001");
+  const [message, setMessage] = useState("/* Hello World */");
 
   useEffect(() => {
-    socket.emit("message", { message: "Hi" });
-    socket.on("message", (data) => {
-      console.log(data);
+    socket.on("client_message", (data) => {
+      setMessage(data?.message);
     });
-
     return () => socket.disconnect();
   }, [socket]);
 
   const handleEditorOnChange = debounce(
-    (value, event) => console.log(value, event),
+    (value, event) => {
+      setMessage(value);
+      socket.emit("to_server_message", { message: value });
+    },
     300,
     []
   );
@@ -30,7 +32,8 @@ const App = (props) => {
         scrollBeyondLastLine: false,
       }}
       defaultLanguage="javascript"
-      defaultValue="/* Hello World */"
+      defaultValue={message}
+      value={message}
       onChange={handleEditorOnChange}
     />
   );

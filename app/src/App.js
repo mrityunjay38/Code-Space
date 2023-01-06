@@ -3,9 +3,23 @@ import { io } from "socket.io-client";
 import Editor from "@monaco-editor/react";
 import { debounce } from "./utils";
 
+const defaultMessage = `/* Hello World */
+
+import React, { useEffect, useState } from "react";
+
+const App = (props) => {
+    const [message, setMessage] = useState("");
+
+    return (<h1>
+        {message}
+    </h1>)
+}
+
+export default App;`;
+
 const App = (props) => {
   const socket = io("ws://localhost:3001");
-  const [message, setMessage] = useState("/* Hello World */");
+  const [message, setMessage] = useState(defaultMessage);
 
   useEffect(() => {
     socket.on("client_message", (data) => {

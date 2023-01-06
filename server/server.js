@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST", "OPTIONS"],
   },
 });
@@ -22,10 +22,8 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
-  socket.on("message", (data) => {
-    console.log(data);
-    socket.emit("message", { message: "Hello" });
+  socket.on("to_server_message", ({ message = "NA" }) => {
+    socket.broadcast.emit("client_message", { message });
   });
 });
 
